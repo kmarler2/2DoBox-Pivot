@@ -8,7 +8,9 @@ $inputTitle.on('keyup', toggleDisableState);
 
 function saveIdea(event) {
   event.preventDefault();
-  $('.section__ideas').prepend(`<article class="idea-cards"><h2 class="idea-title">${$inputTitle.val()}</h2><article class="delete-x"></article>
+  $('.section__ideas').prepend(`<article class="idea-cards">
+    <h2 class="idea-title">${$inputTitle.val()}</h2>
+    <article class="delete-x"></article>
     <p class="idea-body">${$inputBody.val()}</p>
     <article class="upvote"></article>
     <article class="downvote"></article>
@@ -31,4 +33,11 @@ function toggleDisableState() {
   } else {
     $saveBtn.prop('disabled', true);
   }
+}
+
+$('.section__ideas').on('click', '.delete-x', deleteIdeas);
+
+function deleteIdeas() {
+  $(this).closest('.idea-cards').fadeOut();
+  console.log(this)
 }
