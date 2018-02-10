@@ -8,8 +8,12 @@ $inputTitle.on('keyup', toggleDisableState);
 
 function saveIdea(event) {
   event.preventDefault();
-  $('.section__ideas').prepend(`<article class="idea-cards"><h2 class="idea-title">${$inputTitle.val()}</h2><img src="images/delete.svg" / class="delete-x">
-    <p class="idea-body">${$inputBody.val()}</p><article class="upvote"></article><img src="images/downvote.svg" class="downvote" /><h3 class="quality">quality:</h3></article>`);
+  $('.section__ideas').prepend(`<article class="idea-cards"><h2 class="idea-title">${$inputTitle.val()}</h2><article class="delete-x"></article>
+    <p class="idea-body">${$inputBody.val()}</p>
+    <article class="upvote"></article>
+    <article class="downvote"></article>
+    <h3 class="quality">quality:</h3>
+    </article>`);
   console.log($inputTitle.val());
   clearInputs();
   toggleDisableState();
