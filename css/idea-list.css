@@ -1,0 +1,9 @@
+.idea__list {
+  width: 60%;
+  display: flex;
+  margin: 0 auto;
+}
+
+.section__search-field {
+  margin: 390px auto 0;
+}
