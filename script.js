@@ -13,9 +13,9 @@ $('.section__ideas').on('click', '.downvote', downvoteIdea);
 function saveIdea(event) {
   event.preventDefault();
   $('.section__ideas').prepend(`<article class="idea-cards">
-    <h2 class="idea-title">${$inputTitle.val()}</h2>
+    <h2 class="idea-title" contenteditable="true">${$inputTitle.val()}</h2>
     <article class="delete-x"></article>
-    <p class="idea-body">${$inputBody.val()}</p>
+    <p class="idea-body" contenteditable="true">${$inputBody.val()}</p>
     <article class="upvote"></article>
     <article class="downvote"></article>
     <h3 class="quality">quality: swill</h3>
