@@ -5,6 +5,7 @@ margin-bottom: 20px;
 padding-bottom: 15px;
 text-align: left;
 overflow-y: scroll;
+max-width: 600px;
 }
 
 
@@ -18,12 +19,15 @@ overflow-y: scroll;
 .delete-x {
   display: inline-block;
   height: 20px;
+  width: 29px;
   float: right;
+  background-repeat: no-repeat;
   margin: 5px 5px 0px 0px;
+  background-image: url(../images/delete.svg)
 }
 
 .delete-x:hover {
-  background-image: url(images/delete-hover.svg);
+  background-image: url(../images/delete-hover.svg);
 }
 
 .idea-body {
@@ -37,28 +41,33 @@ overflow-y: scroll;
   height: 20px;
   margin: 5px 15px 0px 0px;
 }
-/*fff*/
-.upvote {
-  height: 20px;
-  width: 20px;
-  z-index: 50;
-  background-image: url(images/upvote.svg);
-}
-
 
 .upvote {
   height: 20px;
   width: 20px;
   z-index: 50;
-  background-image: url(images/upvote.svg);
-}
-
-.downvote:hover {
-  background-image: url(images/downvote-hover.svg);
+  background-image: url(../images/upvote.svg);
+  background-size: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .upvote:hover {
-  background-image: url(images/upvote-hover.svg);
+  background-image: url(../images/upvote-hover.svg);
+}
+
+.downvote {
+  height: 20px;
+  width: 20px;
+  z-index: 50;
+  background-image: url(../images/upvote.svg);
+  background-size: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.downvote:hover {
+  background-image: url(../images/downvote-hover.svg);
 }
 
 .quality {
