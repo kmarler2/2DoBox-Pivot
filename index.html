@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/main-form.css">
+  <link rel="stylesheet" type="text/css" href="css/idea-list.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:400,700" rel="stylesheet">
   <title>Idea Box</title>
 </head>
 <body>
@@ -10,14 +14,16 @@
     <header>
     <h1>idea<span>box</span></h1>
   </header>
+  <article>
     <form>
       <label for="form__input-title"></label>
       <input type="text" name="title" class="form__input-title form-inputs" placeholder="Title">
       <label for="form__input-body"></label>
       <input type="text" name="body" class="form__input-body form-inputs" placeholder="Body">
       <label for="form__button-save"></label>
-      <input type="submit" name="save" class="form__button-save form-inputs">
+      <input type="submit" name="save" class="form__button-save form-inputs" value="save">
     </form>
+  </article>
   </section>
   
 <section>
@@ -25,5 +31,7 @@
   <input type="text" name="search" class="section__search-field" placeholder="Search">
   <section class="section__idea-list"></section>
 </section>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
 </body>
 </html>
