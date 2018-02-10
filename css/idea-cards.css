@@ -1,0 +1,54 @@
+.idea-cards {
+width: 100%;
+border-bottom: 3px solid #D1D3D4;
+margin-bottom: 20px;
+padding-bottom: 15px;
+text-align: left;
+overflow-y: scroll;
+}
+
+.idea-title {
+  color: #6D6E71;
+  font-weight: 700;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.delete-x {
+  display: inline-block;
+  height: 20px;
+  float: right;
+  margin: 5px 5px 0px 0px;
+}
+
+.delete-x:hover {
+  background-image: url(images/delete-hover.svg);
+}
+
+.idea-body {
+  color: #939598;
+  margin-bottom: 10px;
+}
+
+.downvote, .upvote {
+  display: inline-block;
+  float: left;
+  height: 20px;
+  margin: 5px 15px 0px 0px;
+}
+
+.downvote:hover {
+  background-image: url(images/downvote-hover.svg);
+}
+
+.upvote:hover {
+  /*background-image: url(images/upvote-hover);*/
+  color: green;
+}
+
+.quality {
+  text-align: left;
+  color: #6D6E71;
+  font-size: 15px;
+  margin-top: 5px;
+}
