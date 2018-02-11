@@ -1,7 +1,7 @@
 var $inputTitle = $('.form__input-title');
 var $inputBody = $('.form__input-body');
 var $saveBtn = $('.form__button-save')
-// var $quality = 'swill';
+var $quality = 'quality: swill';
 
 $saveBtn.on('click', saveIdea);
 $inputBody.on('keyup', toggleDisableState);
@@ -12,17 +12,30 @@ $('.section__ideas').on('click', '.downvote', downvoteIdea);
 
 function saveIdea(event) {
   event.preventDefault();
+  var newIdea = new ConstructIdeas((jQuery.now()), $inputTitle.val(), $inputBody.val(), $quality)
+  sendToStorage(newIdea);
   $('.section__ideas').prepend(`<article class="idea-cards">
-    <h2 class="idea-title" contenteditable="true">${$inputTitle.val()}</h2>
+    <h2 class="idea-title" contenteditable="true">${newIdea.title}</h2>
     <article class="delete-x"></article>
-    <p class="idea-body" contenteditable="true">${$inputBody.val()}</p>
+    <p class="idea-body" contenteditable="true">${newIdea.body}</p>
     <article class="upvote"></article>
     <article class="downvote"></article>
-    <h3 class="quality">quality: swill</h3>
+    <h3 class="quality">${newIdea.quality}</h3>
     </article>`);
-  // console.log($inputTitle.val());
   clearInputs();
   toggleDisableState();
+}
+
+function ConstructIdeas(id, title, body, quality) {
+  this.id = id;
+  this.title = title;
+  this.body = body;
+  this.quality = quality;
+}
+
+function sendToStorage(idea) {
+  var stringifiedIdea = JSON.stringify(idea);
+  localStorage.setItem(idea.id, stringifiedIdea)
 }
 
 function clearInputs() {
