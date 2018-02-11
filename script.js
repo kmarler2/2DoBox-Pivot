@@ -11,6 +11,9 @@ $inputTitle.on('keyup', toggleDisableState);
 $('.section__ideas').on('click', '.delete-x', deleteIdeas);
 $('.section__ideas').on('click', '.upvote', upvoteIdea);
 $('.section__ideas').on('click', '.downvote', downvoteIdea);
+$('.section__ideas').on('input', '.idea-title', persistTitle);
+$('.section__ideas').on('input', '.idea-body', persistBody);
+
 
 function saveIdea(event) {
   event.preventDefault();
@@ -107,6 +110,30 @@ function downvoteIdea() {
   var idea = localStorage.getItem(id);
   idea = JSON.parse(idea);
   idea.quality = $(this).siblings('h3').text();
+  var stringifiedIdea = JSON.stringify(idea)
+  localStorage.setItem(id, stringifiedIdea);
+}
+
+function persistTitle() {
+  console.log(this);
+  var id = $(this).closest('.idea-cards').attr('id');
+  console.log(id);
+  var idea = localStorage.getItem(id);
+  idea = JSON.parse(idea);
+  idea.title = $(this).text();
+  console.log($(this).text())
+  var stringifiedIdea = JSON.stringify(idea)
+  localStorage.setItem(id, stringifiedIdea);
+}
+
+function persistBody() {
+    console.log(this);
+  var id = $(this).closest('.idea-cards').attr('id');
+  console.log(id);
+  var idea = localStorage.getItem(id);
+  idea = JSON.parse(idea);
+  idea.body = $(this).text();
+  console.log($(this).text())
   var stringifiedIdea = JSON.stringify(idea)
   localStorage.setItem(id, stringifiedIdea);
 }
