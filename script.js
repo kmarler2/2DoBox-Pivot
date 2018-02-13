@@ -13,6 +13,7 @@ $('.section__ideas').on('click', '.upvote', upvoteIdea);
 $('.section__ideas').on('click', '.downvote', downvoteIdea);
 $('.section__ideas').on('input', '.idea-title', persistTitle);
 $('.section__ideas').on('input', '.idea-body', persistBody);
+$('.section__search-field').on('keyup', searchIdeas);
 
 
 function saveIdea(event) {
@@ -137,3 +138,21 @@ function persistBody() {
   var stringifiedIdea = JSON.stringify(idea)
   localStorage.setItem(id, stringifiedIdea);
 }
+
+function searchIdeas() {
+  var $input = $('.section__search-field').val();
+  $input = $input.toUpperCase()
+  var array = $('.idea-title');
+  $('.idea-cards').hide();
+for (var i = 0; i < array.length; i++) {
+  if ($(array[i]).text().toUpperCase().includes($input)) {
+    $(array[i]).closest('article').show();
+    console.log($(array[i]).closest('article'))
+  }
+}}
+
+  // array.forEach(function(title) {
+  // title.hide();
+  // })
+
+// }
