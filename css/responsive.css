@@ -4,25 +4,25 @@
     width: 90%;
   }
 
-.section__ideas {
-  width: 90%;
-  margin: 337px auto 0px;
-}
+  .section__ideas {
+    width: 90%;
+    margin: 337px auto 0px;
+  }
 
-h1 {
-  font-size: 50px;
-  margin: 10px auto 0px;
-}
+  h1 {
+    font-size: 50px;
+    margin: 10px auto 0px;
+  }
 
-input {
-  height: 40px;
-}
+  input {
+    height: 40px;
+  }
 
-.section__main {
-  height: 265px;
-}
+  .section__main {
+    height: 265px;
+  }
 
-.section__search-field {
-  margin: 272px auto 0px;
-}
+  .section__search-field {
+    margin: 272px auto 0px;
+  }
 }

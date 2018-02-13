@@ -15,7 +15,6 @@ $('.section__ideas').on('input', '.idea-title', persistTitle);
 $('.section__ideas').on('input', '.idea-body', persistBody);
 $('.section__search-field').on('keyup', searchIdeas);
 
-
 function saveIdea(event) {
   event.preventDefault();
   var newIdea = new ConstructIdeas((jQuery.now()), $inputTitle.val(), $inputBody.val(), $quality)
@@ -47,18 +46,17 @@ function sendToStorage(idea) {
 function getFromStorage() {
   var values = [];
   var keys = Object.keys(localStorage);
-for (var i = 0; i < keys.length; i++) {
-  values.push(JSON.parse(localStorage.getItem(keys[i])));
-  console.log(values[i]);
-  $('.section__ideas').prepend(`<article class="idea-cards" id="${values[i].id}">
-    <h2 class="idea-title" contenteditable="true">${values[i].title}</h2>
-    <article class="delete-x"></article>
-    <p class="idea-body" contenteditable="true">${values[i].body}</p>
-    <article class="upvote"></article>
-    <article class="downvote"></article>
-    <h3 class="quality">${values[i].quality}</h3>
-    </article>`);
-}
+  for (var i = 0; i < keys.length; i++) {
+    values.push(JSON.parse(localStorage.getItem(keys[i])));
+    $('.section__ideas').prepend(`<article class="idea-cards" id="${values[i].id}">
+      <h2 class="idea-title" contenteditable="true">${values[i].title}</h2>
+      <article class="delete-x"></article>
+      <p class="idea-body" contenteditable="true">${values[i].body}</p>
+      <article class="upvote"></article>
+      <article class="downvote"></article>
+      <h3 class="quality">${values[i].quality}</h3>
+      </article>`);
+  }
 }
 
 function clearInputs() {
@@ -79,35 +77,37 @@ function deleteIdeas() {
   $(this).closest('.idea-cards').fadeOut();
   var id = $(this).closest('.idea-cards').attr('id');
   localStorage.removeItem(id);
-  console.log(this)
 }
 
+function changeStorageQuality(newthis) {
+  console.log(newthis)
+  var id = $(newthis).closest('.idea-cards').attr('id');
+  var idea = localStorage.getItem(id);
+  idea = JSON.parse(idea);
+  idea.quality = $(newthis).siblings('h3').text();
+  var stringifiedIdea = JSON.stringify(idea)
+  localStorage.setItem(id, stringifiedIdea);
+}
 function upvoteIdea() {
   if ($(this).siblings('h3').text() === 'quality: swill') {
     $(this).siblings('h3').text('quality: plausible');
   } else if ($(this).siblings('h3').text() === 'quality: plausible') {
     $(this).siblings('h3').text('quality: genius');
   }
-
-  var id = $(this).closest('.idea-cards').attr('id');
-  console.log(id);
-  var idea = localStorage.getItem(id);
-  idea = JSON.parse(idea);
-  idea.quality = $(this).siblings('h3').text();
-  var stringifiedIdea = JSON.stringify(idea)
-  localStorage.setItem(id, stringifiedIdea);
-
+  changeStorageQuality(this)
 }
 
 function downvoteIdea() {
-  console.log(this)
   if ($(this).siblings('h3').text() === 'quality: genius') {
     $(this).siblings('h3').text('quality: plausible')
   } else if ($(this).siblings('h3').text() === 'quality: plausible') {
     $(this).siblings('h3').text('quality: swill')
   }
+  changeStorageQuality(this)
+}
+
+function changeStorageQuality() {
   var id = $(this).closest('.idea-cards').attr('id');
-  console.log(id);
   var idea = localStorage.getItem(id);
   idea = JSON.parse(idea);
   idea.quality = $(this).siblings('h3').text();
@@ -116,43 +116,61 @@ function downvoteIdea() {
 }
 
 function persistTitle() {
-  console.log(this);
   var id = $(this).closest('.idea-cards').attr('id');
-  console.log(id);
   var idea = localStorage.getItem(id);
   idea = JSON.parse(idea);
   idea.title = $(this).text();
-  console.log($(this).text())
   var stringifiedIdea = JSON.stringify(idea)
   localStorage.setItem(id, stringifiedIdea);
 }
 
 function persistBody() {
-    console.log(this);
   var id = $(this).closest('.idea-cards').attr('id');
-  console.log(id);
   var idea = localStorage.getItem(id);
   idea = JSON.parse(idea);
   idea.body = $(this).text();
-  console.log($(this).text())
   var stringifiedIdea = JSON.stringify(idea)
   localStorage.setItem(id, stringifiedIdea);
 }
 
 function searchIdeas() {
+  searchTitle();
+  searchQuality();
+  searchBody();
+
+}
+
+function searchQuality() {
   var $input = $('.section__search-field').val();
-  $input = $input.toUpperCase()
+  $input = $input.toUpperCase();
+  var array = $('.quality');
+  for (var i = 0; i < array.length; i++) {
+    if ($(array[i]).text().toUpperCase().includes($input)) {
+      $(array[i]).closest('article').show();
+    }
+  }
+}
+
+function searchBody() {
+  var $input = $('.section__search-field').val();
+  $input = $input.toUpperCase();
+  var array = $('.idea-body');
+  for (var i = 0; i < array.length; i++) {
+    if ($(array[i]).text().toUpperCase().includes($input)) {
+      $(array[i]).closest('article').show();
+    }
+  }
+}
+
+function searchTitle() {
+  var $input = $('.section__search-field').val();
+  $input = $input.toUpperCase();
   var array = $('.idea-title');
   $('.idea-cards').hide();
-for (var i = 0; i < array.length; i++) {
-  if ($(array[i]).text().toUpperCase().includes($input)) {
-    $(array[i]).closest('article').show();
-    console.log($(array[i]).closest('article'))
+  for (var i = 0; i < array.length; i++) {
+    if ($(array[i]).text().toUpperCase().includes($input)) {
+      $(array[i]).closest('article').show();
+    }
   }
-}}
+}
 
-  // array.forEach(function(title) {
-  // title.hide();
-  // })
-
-// }
