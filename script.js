@@ -11,8 +11,8 @@ $inputTitle.on('keyup', toggleDisableState);
 $('.section__ideas').on('click', '.delete-x', deleteIdeas);
 $('.section__ideas').on('click', '.upvote', upvoteIdea);
 $('.section__ideas').on('click', '.downvote', downvoteIdea);
-$('.section__ideas').on('input', '.idea-title', persistTitle);
-$('.section__ideas').on('input', '.idea-body', persistBody);
+$('.section__ideas').on('keydown', '.idea-title', persistTitle);
+$('.section__ideas').on('keydown', '.idea-body', persistBody);
 $('.section__search-field').on('keyup', searchIdeas);
 
 function saveIdea(event) {
@@ -115,7 +115,11 @@ function changeStorageQuality() {
   localStorage.setItem(id, stringifiedIdea);
 }
 
-function persistTitle() {
+function persistTitle(e) {
+  if (e.keyCode === 13) {
+  e.preventDefault();
+  $inputTitle.focus();
+}
   var id = $(this).closest('.idea-cards').attr('id');
   var idea = localStorage.getItem(id);
   idea = JSON.parse(idea);
@@ -124,7 +128,11 @@ function persistTitle() {
   localStorage.setItem(id, stringifiedIdea);
 }
 
-function persistBody() {
+function persistBody(e) {
+  if (e.keyCode === 13) {
+  e.preventDefault();
+  $inputTitle.focus();
+}
   var id = $(this).closest('.idea-cards').attr('id');
   var idea = localStorage.getItem(id);
   idea = JSON.parse(idea);
