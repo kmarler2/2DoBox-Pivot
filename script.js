@@ -50,7 +50,7 @@ function getFromStorage() {
     values.push(JSON.parse(localStorage.getItem(keys[i])));
     $('.section__ideas').prepend(`<article class="idea-cards" id="${values[i].id}">
       <h2 class="idea-title" contenteditable="true">${values[i].title}</h2>
-      <article class="delete-x"></article>
+      <article class="delete-x" aria-label="Button to delete idea"></article>
       <p class="idea-body" contenteditable="true">${values[i].body}</p>
       <article class="upvote"></article>
       <article class="downvote"></article>
@@ -80,7 +80,6 @@ function deleteIdeas() {
 }
 
 function changeStorageQuality(newthis) {
-  console.log(newthis)
   var id = $(newthis).closest('.idea-cards').attr('id');
   var idea = localStorage.getItem(id);
   idea = JSON.parse(idea);
@@ -88,6 +87,7 @@ function changeStorageQuality(newthis) {
   var stringifiedIdea = JSON.stringify(idea)
   localStorage.setItem(id, stringifiedIdea);
 }
+
 function upvoteIdea() {
   if ($(this).siblings('h3').text() === 'quality: swill') {
     $(this).siblings('h3').text('quality: plausible');
@@ -106,20 +106,11 @@ function downvoteIdea() {
   changeStorageQuality(this)
 }
 
-function changeStorageQuality() {
-  var id = $(this).closest('.idea-cards').attr('id');
-  var idea = localStorage.getItem(id);
-  idea = JSON.parse(idea);
-  idea.quality = $(this).siblings('h3').text();
-  var stringifiedIdea = JSON.stringify(idea)
-  localStorage.setItem(id, stringifiedIdea);
-}
-
 function persistTitle(e) {
   if (e.keyCode === 13) {
   e.preventDefault();
   $inputTitle.focus();
-}
+  }
   var id = $(this).closest('.idea-cards').attr('id');
   var idea = localStorage.getItem(id);
   idea = JSON.parse(idea);
@@ -132,7 +123,7 @@ function persistBody(e) {
   if (e.keyCode === 13) {
   e.preventDefault();
   $inputTitle.focus();
-}
+  }
   var id = $(this).closest('.idea-cards').attr('id');
   var idea = localStorage.getItem(id);
   idea = JSON.parse(idea);
