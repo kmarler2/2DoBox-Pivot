@@ -108,8 +108,8 @@ function downvoteIdea() {
 
 function persistTitle(e) {
   if (e.keyCode === 13) {
-  e.preventDefault();
-  $inputTitle.focus();
+    e.preventDefault();
+    $inputTitle.focus();
   }
   var id = $(this).closest('.idea-cards').attr('id');
   var idea = localStorage.getItem(id);
@@ -133,39 +133,18 @@ function persistBody(e) {
 }
 
 function searchIdeas() {
-  searchTitle();
-  searchQuality();
-  searchBody();
+   $('.idea-cards').hide();
+  search('.quality');
+  search('.idea-body');
+  search('.idea-title');
 
 }
 
-function searchQuality() {
+function search(selector) {
+  console.log(selector)
   var $input = $('.section__search-field').val();
   $input = $input.toUpperCase();
-  var array = $('.quality');
-  for (var i = 0; i < array.length; i++) {
-    if ($(array[i]).text().toUpperCase().includes($input)) {
-      $(array[i]).closest('article').show();
-    }
-  }
-}
-
-function searchBody() {
-  var $input = $('.section__search-field').val();
-  $input = $input.toUpperCase();
-  var array = $('.idea-body');
-  for (var i = 0; i < array.length; i++) {
-    if ($(array[i]).text().toUpperCase().includes($input)) {
-      $(array[i]).closest('article').show();
-    }
-  }
-}
-
-function searchTitle() {
-  var $input = $('.section__search-field').val();
-  $input = $input.toUpperCase();
-  var array = $('.idea-title');
-  $('.idea-cards').hide();
+  var array = $(selector);
   for (var i = 0; i < array.length; i++) {
     if ($(array[i]).text().toUpperCase().includes($input)) {
       $(array[i]).closest('article').show();
