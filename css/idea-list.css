@@ -1,3 +1,6 @@
+/*why are undescores used for search css?*/
+/*i personally dont like adding section and article to selectors*/
+
 .idea__list {
   display: flex;
   justify-content: center;

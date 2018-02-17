@@ -15,6 +15,7 @@ $('.section__ideas').on('keydown', '.idea-title', persistTitle);
 $('.section__ideas').on('keydown', '.idea-body', persistBody);
 $('.section__search-field').on('keyup', searchIdeas);
 
+// save idea should be a function, append should be another
 function saveIdea(event) {
   event.preventDefault();
   var newIdea = new ConstructIdeas((jQuery.now()), $inputTitle.val(), $inputBody.val(), $quality)
@@ -43,6 +44,7 @@ function sendToStorage(idea) {
   localStorage.setItem(idea.id, stringifiedIdea)
 }
 
+// only need one append
 function getFromStorage() {
   var values = [];
   var keys = Object.keys(localStorage);
@@ -65,6 +67,7 @@ function clearInputs() {
   $inputTitle.focus();
 }
 
+// not sure this works
 function toggleDisableState() {
   if ($inputBody.val() && $inputTitle.val()) {
     $saveBtn.prop('disabled', false);
@@ -79,6 +82,7 @@ function deleteIdeas() {
   localStorage.removeItem(id);
 }
 
+// change names
 function changeStorageQuality(newthis) {
   var id = $(newthis).closest('.idea-cards').attr('id');
   var idea = localStorage.getItem(id);
@@ -88,6 +92,7 @@ function changeStorageQuality(newthis) {
   localStorage.setItem(id, stringifiedIdea);
 }
 
+// should be able to grab class .quality instead of h3
 function upvoteIdea() {
   if ($(this).siblings('h3').text() === 'quality: swill') {
     $(this).siblings('h3').text('quality: plausible');
@@ -106,6 +111,9 @@ function downvoteIdea() {
   changeStorageQuality(this)
 }
 
+// change names
+// not saving the last character
+// not sure what e.keyode is doing
 function persistTitle(e) {
   if (e.keyCode === 13) {
     e.preventDefault();
@@ -119,6 +127,9 @@ function persistTitle(e) {
   localStorage.setItem(id, stringifiedIdea);
 }
 
+// change names
+// not saving the last character
+// not sure what e.keyode is doing
 function persistBody(e) {
   if (e.keyCode === 13) {
   e.preventDefault();
@@ -132,6 +143,8 @@ function persistBody(e) {
   localStorage.setItem(id, stringifiedIdea);
 }
 
+// should only need to call search for entire idea
+// not saving the last character
 function searchIdeas() {
    $('.idea-cards').hide();
   search('.quality');
