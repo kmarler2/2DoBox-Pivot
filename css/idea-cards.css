@@ -1,3 +1,6 @@
+/*should make the cursor a pointer on all hover of buttons*/
+
+/*should be idea-card*/
 .idea-cards {
   border-bottom: 3px solid #D1D3D4;
   margin-bottom: 20px;
@@ -16,6 +19,7 @@
   margin-bottom: 10px;
 }
 
+/*delete-btn* or just delete*/
 .delete-x {
   background-image: url(../images/delete.svg);
   background-repeat: no-repeat;
@@ -26,6 +30,7 @@
   width: 29px;
 }
 
+/*delete-btn*/
 .delete-x:hover {
   background-image: url(../images/delete-hover.svg);
 }
