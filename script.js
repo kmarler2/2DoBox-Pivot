@@ -10,9 +10,9 @@ $inputTitle.on('keyup', toggleDisableState);
 $('.section__ideas').on('click', '.delete-x', deleteIdeas);
 $('.section__ideas').on('click', '.upvote', upvoteIdea);
 $('.section__ideas').on('click', '.downvote', downvoteIdea);
-$('.section__ideas').on('input', '.idea-title', persistTitle);
-$('.section__ideas').on('input', '.idea-body', persistBody);
-$('.section__search-field').on('keyup', searchIdeas);
+$('.section__ideas').on('input', '.idea-title', saveEditedTitle);
+$('.section__ideas').on('input', '.idea-body', saveEditedBody);
+$('.section__search-field').on('keyup', search);
 
 function ConstructIdeas(id, title, body, quality) {
   this.id = id;
@@ -21,12 +21,11 @@ function ConstructIdeas(id, title, body, quality) {
   this.quality = quality;
 }
 
-// save idea should be a function, append should be another
 function saveIdea(event) {
   event.preventDefault();
   var newIdea = new ConstructIdeas((jQuery.now()), $inputTitle.val(), $inputBody.val(), $quality)
   sendToStorage(newIdea);
-  // prependIdea(newIdea);
+  formReset();
   prependIdeas();
 }
 
@@ -35,7 +34,6 @@ function sendToStorage(idea) {
   localStorage.setItem(idea.id, stringifiedIdea)
 }
 
-// only need one append
 function prependIdeas() {
   $('.section__ideas').html("");
   var ideas = [];
@@ -65,7 +63,6 @@ function clearInputs() {
   $inputTitle.focus();
 }
 
-// need to grey out when disabled
 function toggleDisableState() {
   if ($inputBody.val() && $inputTitle.val()) {
     $saveBtn.prop('disabled', false);
@@ -80,7 +77,6 @@ function deleteIdeas() {
   localStorage.removeItem(id);
 }
 
-// change names
 function saveQuality() {
   var key = $(newthis).closest('.idea-cards').attr('id');
   var stringifiedIdea = localStorage.getItem(key);
@@ -90,7 +86,6 @@ function saveQuality() {
   localStorage.setItem(id, stringifiedIdea);
 }
 
-// should be able to grab class .quality instead of h3
 function upvoteIdea() {
   if ($(this).siblings('h3').text() === 'quality: swill') {
     $(this).siblings('h3').text('quality: plausible');
@@ -109,57 +104,27 @@ function downvoteIdea() {
   saveQuality(this)
 }
 
-// change names
-// not saving the last character
-// not sure what e.keyode is doing
-function persistTitle(e) {
-  if (e.keyCode === 13) {
-    e.preventDefault();
-    $inputTitle.focus();
-  }
-  var id = $(this).closest('.idea-cards').attr('id');
-  var idea = localStorage.getItem(id);
-  idea = JSON.parse(idea);
+function saveEditedTitle() {
+  var key = $(this).closest('.idea-cards').attr('id');
+  var stringifiedIdea = localStorage.getItem(key);
+  idea = JSON.parse(stringifiedIdea);
   idea.title = $(this).text();
-  var stringifiedIdea = JSON.stringify(idea)
-  localStorage.setItem(id, stringifiedIdea);
+  var changedIdea = JSON.stringify(idea)
+  localStorage.setItem(key, changedIdea);
 }
 
-// change names
-// not saving the last character
-// not sure what e.keyode is doing
-function persistBody(e) {
-  if (e.keyCode === 13) {
-  e.preventDefault();
-  $inputTitle.focus();
-  }
-  var id = $(this).closest('.idea-cards').attr('id');
-  var idea = localStorage.getItem(id);
-  idea = JSON.parse(idea);
+function saveEditedBody() {
+  var key = $(this).closest('.idea-cards').attr('id');
+  var stringifiedIdea = localStorage.getItem(key);
+  idea = JSON.parse(stringifiedIdea);
   idea.body = $(this).text();
-  var stringifiedIdea = JSON.stringify(idea)
-  localStorage.setItem(id, stringifiedIdea);
+  var changedIdea = JSON.stringify(idea)
+  localStorage.setItem(key, changedIdea);
 }
 
-// should only need to call search for entire idea
-// not saving the last character
-function searchIdeas() {
-   $('.idea-cards').hide();
-  search('.quality');
-  search('.idea-body');
-  search('.idea-title');
-
+function search() {
+  var $input = $('.section__search-field').val().toLowerCase();
+  $(".idea-cards").filter(function() {
+  $(this).toggle($(this).text().toLowerCase().indexOf($input) > -1)
+  }); 
 }
-
-function search(selector) {
-  console.log(selector)
-  var $input = $('.section__search-field').val();
-  $input = $input.toUpperCase();
-  var array = $(selector);
-  for (var i = 0; i < array.length; i++) {
-    if ($(array[i]).text().toUpperCase().includes($input)) {
-      $(array[i]).closest('article').show();
-    }
-  }
-}
-
