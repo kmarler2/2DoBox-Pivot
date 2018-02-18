@@ -7,7 +7,7 @@ $(window).on('load', prependIdeas);
 $saveBtn.on('click', saveIdea);
 $inputBody.on('keyup', toggleDisableState);
 $inputTitle.on('keyup', toggleDisableState);
-$('.section__ideas').on('click', '.delete-x', deleteIdeas);
+$('.section__ideas').on('click', '.delete', deleteIdeas);
 $('.section__ideas').on('click', '.upvote', upvoteIdea);
 $('.section__ideas').on('click', '.downvote', downvoteIdea);
 $('.section__ideas').on('input', '.idea-title', persistTitle);
@@ -43,9 +43,9 @@ function prependIdeas() {
   for (var i = 0; i < keys.length; i++) {
   var storedIdea = JSON.parse(localStorage.getItem(keys[i]));
   ideas.push(storedIdea);
-    $('.section__ideas').prepend(`<article class="idea-cards" id="${ideas[i].id}">
+    $('.section__ideas').prepend(`<article class="idea-card" id="${ideas[i].id}">
       <h2 class="idea-title" contenteditable="true">${ideas[i].title}</h2>
-      <article class="delete-x" aria-label="Button to delete idea"></article>
+      <article class="delete" aria-label="Button to delete idea"></article>
       <p class="idea-body" contenteditable="true">${ideas[i].body}</p>
       <article class="upvote"></article>
       <article class="downvote"></article>
@@ -75,14 +75,14 @@ function toggleDisableState() {
 }
 
 function deleteIdeas() {
-  $(this).closest('.idea-cards').fadeOut();
-  var id = $(this).closest('.idea-cards').attr('id');
+  $(this).closest('.idea-card').fadeOut();
+  var id = $(this).closest('.idea-card').attr('id');
   localStorage.removeItem(id);
 }
 
 // change names
 function saveQuality() {
-  var key = $(newthis).closest('.idea-cards').attr('id');
+  var key = $(newthis).closest('.idea-card').attr('id');
   var stringifiedIdea = localStorage.getItem(key);
   var parsedIdea = JSON.parse(stringifiedIdea);
   idea.quality = $(newthis).siblings('h3').text();
@@ -117,7 +117,7 @@ function persistTitle(e) {
     e.preventDefault();
     $inputTitle.focus();
   }
-  var id = $(this).closest('.idea-cards').attr('id');
+  var id = $(this).closest('.idea-card').attr('id');
   var idea = localStorage.getItem(id);
   idea = JSON.parse(idea);
   idea.title = $(this).text();
@@ -133,7 +133,7 @@ function persistBody(e) {
   e.preventDefault();
   $inputTitle.focus();
   }
-  var id = $(this).closest('.idea-cards').attr('id');
+  var id = $(this).closest('.idea-card').attr('id');
   var idea = localStorage.getItem(id);
   idea = JSON.parse(idea);
   idea.body = $(this).text();
@@ -144,7 +144,7 @@ function persistBody(e) {
 // should only need to call search for entire idea
 // not saving the last character
 function searchIdeas() {
-   $('.idea-cards').hide();
+   $('.idea-card').hide();
   search('.quality');
   search('.idea-body');
   search('.idea-title');
