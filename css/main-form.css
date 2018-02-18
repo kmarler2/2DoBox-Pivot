@@ -1,22 +1,16 @@
-html {
- box-sizing: border-box;
-}
-
 *, *:before, *:after {
  box-sizing: inherit;
  margin: 0;
 }
 
-body {
-  font-family: 'Open Sans', sans-serif;
+article {
+  margin: 10px auto;
+  text-align: center;
+  width: 60%; 
 }
 
-.section__main {
-  background-color: #E5F3F2;
-  height: 330px;
-  position: fixed;
-  width: 100vw;
-  z-index: 2;
+body {
+  font-family: 'Open Sans', sans-serif;
 }
 
 h1 {
@@ -28,14 +22,8 @@ h1 {
   font-family: 'Roboto Slab', serif;
 }
 
-span {
-  color: #6D6E71;
-}
-
-article {
-  margin: 10px auto;
-  text-align: center;
-  width: 60%; 
+html {
+ box-sizing: border-box;
 }
 
 input {
@@ -47,6 +35,13 @@ input {
   width: 100%;
 }
 
+input::placeholder {
+  color: #BDBEC0;
+}
+
+span {
+  color: #6D6E71;
+}
 
 .form__button-save {
   background-color: #00A79D;
@@ -59,6 +54,10 @@ input {
   color: #FFF;
 }
 
-input::placeholder {
-  color: #BDBEC0;
+.section__main {
+  background-color: #E5F3F2;
+  height: 330px;
+  position: fixed;
+  width: 100vw;
+  z-index: 2;
 }
