@@ -14,16 +14,16 @@
     height: 40px;
   }
 
-  .section__ideas {
+  .section-ideas {
     width: 90%;
     margin: 337px auto 0px;
   }
 
-  .section__main {
+  .main-section {
     height: 265px;
   }
 
-  .section__search-field {
+  .search-field {
     margin: 272px auto 0px;
   }
 }
