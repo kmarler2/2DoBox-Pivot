@@ -43,18 +43,18 @@ span {
   color: #6D6E71;
 }
 
-.form__button-save {
+.save-button {
   background-color: #00A79D;
   color: #FFF;
   padding: 0;
 }
 
-.form__button-save:hover {
+.save-button:hover {
   background-color: #045E55;
   color: #FFF;
 }
 
-.section__main {
+.main-section {
   background-color: #E5F3F2;
   height: 330px;
   position: fixed;

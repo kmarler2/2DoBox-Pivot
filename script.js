@@ -1,18 +1,18 @@
-var $inputTitle = $('.form__input-title');
-var $inputBody = $('.form__input-body');
-var $saveBtn = $('.form__button-save')
+var $inputTitle = $('.title');
+var $inputBody = $('.input-text');
+var $saveBtn = $('.save-button')
 var $quality = 'quality: swill';
 
 $(window).on('load', prependIdeas);
 $saveBtn.on('click', saveIdea);
 $inputBody.on('keyup', toggleDisableState);
 $inputTitle.on('keyup', toggleDisableState);
-$('.section__ideas').on('click', '.delete', deleteIdeas);
-$('.section__ideas').on('click', '.upvote', upvoteIdea);
-$('.section__ideas').on('click', '.downvote', downvoteIdea);
-$('.section__ideas').on('input', '.idea-title', persistTitle);
-$('.section__ideas').on('input', '.idea-body', persistBody);
-$('.section__search-field').on('keyup', searchIdeas);
+$('.section-ideas').on('click', '.delete', deleteIdeas);
+$('.section-ideas').on('click', '.upvote', upvoteIdea);
+$('.section-ideas').on('click', '.downvote', downvoteIdea);
+$('.section-ideas').on('input', '.idea-title', persistTitle);
+$('.section-ideas').on('input', '.idea-body', persistBody);
+$('.search-field').on('keyup', searchIdeas);
 
 function ConstructIdeas(id, title, body, quality) {
   this.id = id;
@@ -37,13 +37,13 @@ function sendToStorage(idea) {
 
 // only need one append
 function prependIdeas() {
-  $('.section__ideas').html("");
+  $('.section-ideas').html("");
   var ideas = [];
   var keys = Object.keys(localStorage);
   for (var i = 0; i < keys.length; i++) {
   var storedIdea = JSON.parse(localStorage.getItem(keys[i]));
   ideas.push(storedIdea);
-    $('.section__ideas').prepend(`<article class="idea-card" id="${ideas[i].id}">
+    $('.section-ideas').prepend(`<article class="idea-card" id="${ideas[i].id}">
       <h2 class="idea-title" contenteditable="true">${ideas[i].title}</h2>
       <article class="delete" aria-label="Button to delete idea"></article>
       <p class="idea-body" contenteditable="true">${ideas[i].body}</p>
@@ -153,7 +153,7 @@ function searchIdeas() {
 
 function search(selector) {
   console.log(selector)
-  var $input = $('.section__search-field').val();
+  var $input = $('.search-field').val();
   $input = $input.toUpperCase();
   var array = $(selector);
   for (var i = 0; i < array.length; i++) {
