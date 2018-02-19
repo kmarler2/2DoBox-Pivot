@@ -7,27 +7,26 @@ $(window).on('load', prependIdeas);
 $saveBtn.on('click', saveIdea);
 $inputBody.on('keyup', toggleDisableState);
 $inputTitle.on('keyup', toggleDisableState);
+$('.section-ideas').on('click', '.delete', deleteIdeas);
+$('.section-ideas').on('click', '.upvote', upvoteIdea);
+$('.section-ideas').on('click', '.downvote', downvoteIdea);
+$('.section-ideas').on('input', '.idea-title', persistTitle);
+$('.section-ideas').on('input', '.idea-body', persistBody);
+$('.search-field').on('keyup', searchIdeas);
 
-$('.section__ideas').on('click', '.delete', deleteIdeas);
-$('.section__ideas').on('click', '.upvote', upvoteIdea);
-$('.section__ideas').on('click', '.downvote', downvoteIdea);
-$('.section__ideas').on('input', '.idea-title', saveEditedTitle);
-$('.section__ideas').on('input', '.idea-body', saveEditedBody);
-$('.section__search-field').on('keyup', search);
-
-
-function InitiateIdea(id, title, body, quality) {
+function ConstructIdeas(id, title, body, quality) {
   this.id = id;
   this.title = title;
   this.body = body;
   this.quality = quality;
 }
 
+// save idea should be a function, append should be another
 function saveIdea(event) {
   event.preventDefault();
-  var newIdea = new InitiateIdea((jQuery.now()), $inputTitle.val(), $inputBody.val(), $quality)
+  var newIdea = new ConstructIdeas((jQuery.now()), $inputTitle.val(), $inputBody.val(), $quality)
   sendToStorage(newIdea);
-  formReset();
+  // prependIdea(newIdea);
   prependIdeas();
 }
 
@@ -36,6 +35,7 @@ function sendToStorage(idea) {
   localStorage.setItem(idea.id, stringifiedIdea)
 }
 
+// only need one append
 function prependIdeas() {
   $('.section-ideas').html("");
   var ideas = [];
@@ -54,12 +54,43 @@ function prependIdeas() {
   }
 }
 
+ function formReset(){
+    clearInputs();
+    toggleDisableState();
+}
+
+function clearInputs() {
+  $inputTitle.val('');
+  $inputBody.val('');
+  $inputTitle.focus();
+}
+
+// need to grey out when disabled
+function toggleDisableState() {
+  if ($inputBody.val() && $inputTitle.val()) {
+    $saveBtn.prop('disabled', false);
+  } else {
+    $saveBtn.prop('disabled', true);
+  }
+}
+
 function deleteIdeas() {
   $(this).closest('.idea-card').fadeOut();
   var id = $(this).closest('.idea-card').attr('id');
   localStorage.removeItem(id);
 }
 
+// change names
+function saveQuality() {
+  var key = $(newthis).closest('.idea-card').attr('id');
+  var stringifiedIdea = localStorage.getItem(key);
+  var parsedIdea = JSON.parse(stringifiedIdea);
+  idea.quality = $(newthis).siblings('h3').text();
+  var stringifiedIdea = JSON.stringify(idea)
+  localStorage.setItem(id, stringifiedIdea);
+}
+
+// should be able to grab class .quality instead of h3
 function upvoteIdea() {
   if ($(this).siblings('h3').text() === 'quality: swill') {
     $(this).siblings('h3').text('quality: plausible');
@@ -78,44 +109,46 @@ function downvoteIdea() {
   saveQuality(this)
 }
 
-function saveQuality(newQuality) {
-  var key = $(newQuality).closest('.idea-card').attr('id');
-  var stringifiedIdea = localStorage.getItem(key);
-  var parsedIdea = JSON.parse(stringifiedIdea);
-  parsedIdea.quality = $(newQuality).siblings('h3').text();
-  var stringifiedIdea = JSON.stringify(parsedIdea)
-  localStorage.setItem(key, stringifiedIdea);
-}
-
-function saveEditedTitle() {
-  var key = $(this).closest('.idea-card').attr('id');
-  var stringifiedIdea = localStorage.getItem(key);
-  idea = JSON.parse(stringifiedIdea);
+// change names
+// not saving the last character
+// not sure what e.keyode is doing
+function persistTitle(e) {
+  if (e.keyCode === 13) {
+    e.preventDefault();
+    $inputTitle.focus();
+  }
+  var id = $(this).closest('.idea-card').attr('id');
+  var idea = localStorage.getItem(id);
+  idea = JSON.parse(idea);
   idea.title = $(this).text();
-  var changedIdea = JSON.stringify(idea)
-  localStorage.setItem(key, changedIdea);
+  var stringifiedIdea = JSON.stringify(idea)
+  localStorage.setItem(id, stringifiedIdea);
 }
 
-function saveEditedBody() {
-  var key = $(this).closest('.idea-card').attr('id');
-  var stringifiedIdea = localStorage.getItem(key);
-  idea = JSON.parse(stringifiedIdea);
-  idea.body = $(this).text();
-  var changedIdea = JSON.stringify(idea)
-  localStorage.setItem(key, changedIdea);
-}
-
-function search() {
-  var $input = $('.section__search-field').val().toLowerCase();
-  $(".idea-card").filter(function() {
-  $(this).toggle($(this).text().toLowerCase().indexOf($input) > -1)
-  }); 
-}
-
-function clearInputs() {
-  $inputTitle.val('');
-  $inputBody.val('');
+// change names
+// not saving the last character
+// not sure what e.keyode is doing
+function persistBody(e) {
+  if (e.keyCode === 13) {
+  e.preventDefault();
   $inputTitle.focus();
+  }
+  var id = $(this).closest('.idea-card').attr('id');
+  var idea = localStorage.getItem(id);
+  idea = JSON.parse(idea);
+  idea.body = $(this).text();
+  var stringifiedIdea = JSON.stringify(idea)
+  localStorage.setItem(id, stringifiedIdea);
+}
+
+// should only need to call search for entire idea
+// not saving the last character
+function searchIdeas() {
+   $('.idea-card').hide();
+  search('.quality');
+  search('.idea-body');
+  search('.idea-title');
+
 }
 
 function search(selector) {
@@ -127,16 +160,6 @@ function search(selector) {
     if ($(array[i]).text().toUpperCase().includes($input)) {
       $(array[i]).closest('article').show();
     }
-
-function toggleDisableState() {
-  if ($inputBody.val() && $inputTitle.val()) {
-    $saveBtn.prop('disabled', false);
-  } else {
-    $saveBtn.prop('disabled', true);
   }
 }
 
-function formReset(){
-  clearInputs();
-  toggleDisableState();
-}
