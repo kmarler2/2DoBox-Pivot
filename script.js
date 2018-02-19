@@ -28,6 +28,7 @@ function saveIdea(event) {
   sendToStorage(newIdea);
   // prependIdea(newIdea);
   prependIdeas();
+  clearInputs()
 }
 
 function sendToStorage(idea) {
