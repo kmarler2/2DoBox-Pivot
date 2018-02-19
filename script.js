@@ -46,9 +46,16 @@ function prependIdeas() {
       <h2 class="idea-title" contenteditable="true">${ideas[i].title}</h2>
       <article class="delete" aria-label="Button to delete idea"></article>
       <p class="idea-body" contenteditable="true">${ideas[i].body}</p>
-      <article class="upvote"></article>
-      <article class="downvote"></article>
-      <h3 class="quality">${ideas[i].quality}</h3>
+      <section class="quality-completed">
+        <article class="upvote"></article>
+        <article class="downvote"></article>
+        <h3 class="quality">${ideas[i].quality}</h3>
+        <article class  ="completed-task">
+          <input type="checkbox" name="completed-todo-checkbox" id="completed-checkbox" class="completed-checkbox" value="value">
+          <label for="completed-todo-checkbox">Completed Task</label>
+        </article>
+        </article>
+      </section>
       </article>`);
   }
 }

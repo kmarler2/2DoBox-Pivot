@@ -75,6 +75,28 @@
 .quality {
   color: #6D6E71;
   font-size: 15px;
-  margin-top: 5px;
+  margin-top: 3px;
   text-align: left;
+  display: inline-block;
+}
+
+.completed-task {
+  width: auto;
+  float: right;
+  margin: 0;
+}
+
+.completed-task input {
+    float: left;
+    width: 32px;
+    height: 23px;
+}
+
+.completed-task label {
+    float: left;
+    color: #6D6E71;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: left;
+    margin-top: 2px;
 }
