@@ -35,12 +35,12 @@
   cursor: pointer;
 }
 
-.task-body {
+.idea-body {
   color: #939598;
   margin-bottom: 10px;
 }
 
-.task-card {
+.idea-card {
   border-bottom: 3px solid #D1D3D4;
   margin-bottom: 20px;
   max-width: 600px;
@@ -50,7 +50,7 @@
   width: 100%;
 }
 
-.task-title {
+.idea-title {
   color: #6D6E71;
   display: inline-block;
   font-weight: 700;
@@ -72,43 +72,9 @@
   cursor: pointer;
 }
 
-.quality {
+.importance {
   color: #6D6E71;
   font-size: 15px;
-  margin-top: 3px;
+  margin-top: 5px;
   text-align: left;
-  display: inline-block;
-}
-
-.completed {
-  background-color: #eee;
-}
-
-.completed h2, .completed .idea-body {
-  text-decoration: line-through;
-}
-
-.completed-task {
-  width: auto;
-  float: right;
-  margin: 0;
-}
-
-.completed-task input {
-    float: left;
-    width: 32px;
-    height: 23px;
-}
-
-.completed-task label {
-    float: left;
-    color: #6D6E71;
-    font-weight: bold;
-    font-size: 14px;
-    text-align: left;
-    margin-top: 2px;
-}
-
-.hide {
-  display: none;
 }

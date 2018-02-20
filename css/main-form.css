@@ -43,13 +43,13 @@ span {
   color: #6D6E71;
 }
 
-.save-btn {
+.save-button {
   background-color: #00A79D;
   color: #FFF;
   padding: 0;
 }
 
-.save-btn:hover {
+.save-button:hover {
   background-color: #045E55;
   color: #FFF;
 }
