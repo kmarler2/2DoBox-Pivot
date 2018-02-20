@@ -1,7 +1,7 @@
 var $inputTitle = $('.title');
 var $inputBody = $('.input-text');
 var $saveBtn = $('.save-btn')
-var $importance = 'Importance: None';
+var $importance = 'Importance: Normal';
 var $showCompletedBtn = $('.show-completed');
 var $hideCompletedBtn = $('.hide-completed');
 
@@ -75,21 +75,7 @@ function prependIncompleteTasks() {
   var storedTask = JSON.parse(localStorage.getItem(keys[i]));
   tasks.push(storedTask);
   if (tasks[i].completed === '') {
-    $('.task-list').prepend(`<article class="task-card ${tasks[i].completed}" id="${tasks[i].id}">
-      <h2 class="task-title" contenteditable="true">${tasks[i].title}</h2>
-      <article class="delete" aria-label="Button to delete task"></article>
-      <p class="task-body" contenteditable="true">${tasks[i].body}</p>
-      <section class="importance-completed">
-        <article class="upvote"></article>
-        <article class="downvote"></article>
-        <h3 class="importance">${tasks[i].importance}</h3>
-        <article class="completed-task">
-          <input type="checkbox" name="completed-task-checkbox" id="completed-checkbox" class="completed-checkbox" value="value" ${tasks[i].checked}>
-          <label for="completed-task-checkbox">Completed Task</label>
-        </article>
-        </article>
-      </section>
-      </article>`);
+    prependTask(storedTask);
   }
 }
 
@@ -99,24 +85,10 @@ function prependCompletedTasks() {
   var tasks = [];
   var keys = Object.keys(localStorage);
   for (var i = 0; i < keys.length; i++) {
-  var storedTask = JSON.parse(localStorage.getItem(keys[i]));
-  tasks.push(storedTask);
-  if (tasks[i].completed === 'completed') {
-    $('.task-list').prepend(`<article class="task-card ${tasks[i].completed}" id="${tasks[i].id}">
-      <h2 class="task-title" contenteditable="true">${tasks[i].title}</h2>
-      <article class="delete" aria-label="Button to delete task"></article>
-      <p class="task-body" contenteditable="true">${tasks[i].body}</p>
-      <section class="importance-completed">
-        <article class="upvote"></article>
-        <article class="downvote"></article>
-        <h3 class="importance">${tasks[i].importance}</h3>
-        <article class="completed-task">
-          <input type="checkbox" name="completed-task-checkbox" id="completed-checkbox" class="completed-checkbox" value="value" ${tasks[i].checked}>
-          <label for="completed-task-checkbox">Completed Task</label>
-        </article>
-        </article>
-      </section>
-      </article>`);
+    var storedTask = JSON.parse(localStorage.getItem(keys[i]));
+    tasks.push(storedTask);
+    if (tasks[i].completed === 'completed') {
+      prependTask(storedTask);
     }
   }
   toggleCompletedBtn();
