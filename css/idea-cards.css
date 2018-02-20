@@ -80,6 +80,14 @@
   display: inline-block;
 }
 
+.completed {
+  background-color: #eee;
+}
+
+.completed h2, .completed .idea-body {
+  text-decoration: line-through;
+}
+
 .completed-task {
   width: auto;
   float: right;
@@ -99,4 +107,8 @@
     font-size: 14px;
     text-align: left;
     margin-top: 2px;
+}
+
+.hide {
+  display: none;
 }
