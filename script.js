@@ -1,7 +1,7 @@
 var $inputTitle = $('.title');
 var $inputBody = $('.input-text');
 var $saveBtn = $('.save-button')
-var $quality = 'quality: swill';
+var $importance = 'importance: Normal';
 
 $(window).on('load', prependIdeas);
 $saveBtn.on('click', saveIdea);
@@ -14,17 +14,17 @@ $('.section-ideas').on('input', '.idea-title', persistTitle);
 $('.section-ideas').on('input', '.idea-body', persistBody);
 $('.search-field').on('keyup', searchIdeas);
 
-function ConstructIdeas(id, title, body, quality) {
+function ConstructIdeas(id, title, body, importance) {
   this.id = id;
   this.title = title;
   this.body = body;
-  this.quality = quality;
+  this.importance = importance;
 }
 
 // save idea should be a function, append should be another
 function saveIdea(event) {
   event.preventDefault();
-  var newIdea = new ConstructIdeas((jQuery.now()), $inputTitle.val(), $inputBody.val(), $quality)
+  var newIdea = new ConstructIdeas((jQuery.now()), $inputTitle.val(), $inputBody.val(), $importance)
   sendToStorage(newIdea);
   // prependIdea(newIdea);
   prependIdeas();
@@ -50,7 +50,7 @@ function prependIdeas() {
       <p class="idea-body" contenteditable="true">${ideas[i].body}</p>
       <article class="upvote"></article>
       <article class="downvote"></article>
-      <h3 class="quality">${ideas[i].quality}</h3>
+      <h3 class="importance">${ideas[i].importance}</h3>
       </article>`);
   }
 }
@@ -82,32 +82,40 @@ function deleteIdeas() {
 }
 
 // change names
-function saveQuality() {
+function saveImportance() {
   var key = $(newthis).closest('.idea-card').attr('id');
   var stringifiedIdea = localStorage.getItem(key);
   var parsedIdea = JSON.parse(stringifiedIdea);
-  idea.quality = $(newthis).siblings('h3').text();
+  idea.importance = $(newthis).siblings('h3').text();
   var stringifiedIdea = JSON.stringify(idea)
   localStorage.setItem(id, stringifiedIdea);
 }
 
-// should be able to grab class .quality instead of h3
+// should be able to grab class .importance instead of h3
 function upvoteIdea() {
-  if ($(this).siblings('h3').text() === 'quality: swill') {
-    $(this).siblings('h3').text('quality: plausible');
-  } else if ($(this).siblings('h3').text() === 'quality: plausible') {
-    $(this).siblings('h3').text('quality: genius');
+  if ($(this).siblings('h3').text() === 'importance: None') {
+    $(this).siblings('h3').text('importance: Low');
+  } else if ($(this).siblings('h3').text() === 'importance: Low') {
+    $(this).siblings('h3').text('importance: Normal');
+  } else if ($(this).siblings('h3').text() === 'importance: Normal') {
+    $(this).siblings('h3').text('importance: High');
+  } else if ($(this).siblings('h3').text() === 'importance: High') {
+    $(this).siblings('h3').text('importance: Critical');
   }
-  saveQuality(this)
+  saveImportance(this)
 }
 
 function downvoteIdea() {
-  if ($(this).siblings('h3').text() === 'quality: genius') {
-    $(this).siblings('h3').text('quality: plausible')
-  } else if ($(this).siblings('h3').text() === 'quality: plausible') {
-    $(this).siblings('h3').text('quality: swill')
+  if ($(this).siblings('h3').text() === 'importance: Critical') {
+    $(this).siblings('h3').text('importance: High')
+  } else if ($(this).siblings('h3').text() === 'importance: High') {
+    $(this).siblings('h3').text('importance: Normal')
+  } else if ($(this).siblings('h3').text() === 'importance: Normal') {
+    $(this).siblings('h3').text('importance: Low')
+  } else if ($(this).siblings('h3').text() === 'importance: Low') {
+    $(this).siblings('h3').text('importance: None')
   }
-  saveQuality(this)
+  saveImportance(this)
 }
 
 // change names
@@ -146,7 +154,7 @@ function persistBody(e) {
 // not saving the last character
 function searchIdeas() {
    $('.idea-card').hide();
-  search('.quality');
+  search('.importance');
   search('.idea-body');
   search('.idea-title');
 
