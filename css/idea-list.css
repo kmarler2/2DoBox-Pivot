@@ -11,7 +11,7 @@
   width: 100%;
 }
 
-.ideas-list {
+.task-list {
   display: flex;
   flex-direction: column;
   margin: 423px auto 0px;
@@ -24,4 +24,9 @@
   background-color: #FFF;
   position: fixed;
   z-index: 1;
+}
+
+.show-hide-btn {
+  margin: 418px 0 0 0;
+  z-index-index: 1;
 }

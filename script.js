@@ -2,64 +2,148 @@ var $inputTitle = $('.title');
 var $inputBody = $('.input-text');
 var $saveBtn = $('.save-btn')
 var $quality = 'quality: swill';
+var $showCompletedBtn = $('.show-completed');
+var $hideCompletedBtn = $('.hide-completed');
 
-$(window).on('load', prependIdeas);
-$saveBtn.on('click', saveIdea);
+$(window).on('load', prependIncompleteTasks);
+$saveBtn.on('click', saveTask);
 $inputBody.on('keyup', toggleDisableState);
 $inputTitle.on('keyup', toggleDisableState);
-$('.ideas-list').on('click', '.delete', deleteIdeas);
-$('.ideas-list').on('click', '.upvote', upvoteIdea);
-$('.ideas-list').on('click', '.downvote', downvoteIdea);
-$('.ideas-list').on('input', '.idea-title', saveEditedTitle);
-$('.ideas-list').on('input', '.idea-body', saveEditedBody);
+$showCompletedBtn.on('click', prependCompletedTasks);
+$hideCompletedBtn.on('click', hideCompletedTasks);
+$('.task-list').on('click', '.delete', deleteTasks);
+$('.task-list').on('click', '.upvote', upvoteTask);
+$('.task-list').on('click', '.downvote', downvoteTask);
+$('.task-list').on('input', '.idea-title', saveEditedTitle);
+$('.task-list').on('input', '.idea-body', saveEditedBody);
+$('.task-list').on('click', '.completed-checkbox', updateCompleted);
+$('.task-list').on('click', '.completed-checkbox', addCompletedClass);
 $('.search-field').on('keyup', search);
 
-function ConstructIdeas(id, title, body, quality) {
+function Task(id, title, body, quality, completed) {
   this.id = id;
   this.title = title;
   this.body = body;
   this.quality = quality;
+  this.completed = '';
+  this.checked = '';
 }
 
-function saveIdea(event) {
+function saveTask(event) {
   event.preventDefault();
-  var newIdea = new ConstructIdeas((jQuery.now()), $inputTitle.val(), $inputBody.val(), $quality)
-  sendToStorage(newIdea);
+  var newTask = new Task((jQuery.now()), $inputTitle.val(), $inputBody.val(), $quality)
+  sendToStorage(newTask)
   formReset();
-  prependIdeas();
-  clearInputs()
+  clearInputs();
 }
 
-function sendToStorage(idea) {
-  var stringifiedIdea = JSON.stringify(idea);
-  localStorage.setItem(idea.id, stringifiedIdea)
+function sendToStorage(task) {
+  var stringifiedTask = JSON.stringify(task);
+  localStorage.setItem(task.id, stringifiedTask);
+  getFromStorage(task);
 }
 
-function prependIdeas() {
-  $('.ideas-list').html("");
-  var ideas = [];
+function getFromStorage(task) {
+  var storedTask = JSON.parse(localStorage.getItem(task.id));
+  prependTask(storedTask);
+}
+
+// Before reload the ideas are prepended without needing to loop through each task
+function prependTask(storedTask) {
+    $('.task-list').prepend(`<article class="task-card ${storedTask.completed}" id="${storedTask.id}">
+      <h2 class="task-title" contenteditable="true">${storedTask.title}</h2>
+      <article class="delete" aria-label="Button to delete task"></article>
+      <p class="task-body" contenteditable="true">${storedTask.body}</p>
+      <section class="quality-completed">
+        <article class="upvote"></article>
+        <article class="downvote"></article>
+        <h3 class="quality">${storedTask.quality}</h3>
+        <article class="completed-task">
+          <input type="checkbox" name="completed-task-checkbox" id="completed-checkbox" class="completed-checkbox" value="value" ${storedTask.checked}>
+          <label for="completed-task-checkbox">Completed Task</label>
+        </article>
+        </article>
+      </section>
+      </article>`);
+  }
+
+
+function prependIncompleteTasks() {
+  $('.task-list').html('');
+  var tasks = [];
   var keys = Object.keys(localStorage);
   for (var i = 0; i < keys.length; i++) {
   var storedIdea = JSON.parse(localStorage.getItem(keys[i]));
-  ideas.push(storedIdea);
-    $('.ideas-list').prepend(`<article class="idea-card" id="${ideas[i].id}">
-      <h2 class="idea-title" contenteditable="true">${ideas[i].title}</h2>
+  tasks.push(storedIdea);
+  if (tasks[i].completed === '') {
+    $('.task-list').prepend(`<article class="task-card ${tasks[i].completed}" id="${tasks[i].id}">
+      <h2 class="task-title" contenteditable="true">${tasks[i].title}</h2>
       <article class="delete" aria-label="Button to delete idea"></article>
-      <p class="idea-body" contenteditable="true">${ideas[i].body}</p>
-      <article class="upvote"></article>
-      <article class="downvote"></article>
-      <h3 class="quality">${ideas[i].quality}</h3>
+      <p class="task-body" contenteditable="true">${tasks[i].body}</p>
+      <section class="quality-completed">
+        <article class="upvote"></article>
+        <article class="downvote"></article>
+        <h3 class="quality">${tasks[i].quality}</h3>
+        <article class="completed-task">
+          <input type="checkbox" name="completed-task-checkbox" id="completed-checkbox" class="completed-checkbox" value="value" ${tasks[i].checked}>
+          <label for="completed-task-checkbox">Completed Task</label>
+        </article>
+        </article>
+      </section>
       </article>`);
   }
 }
 
-function deleteIdeas() {
-  $(this).closest('.idea-card').fadeOut();
-  var id = $(this).closest('.idea-card').attr('id');
+}
+
+function prependCompletedTasks() {
+  var tasks = [];
+  var keys = Object.keys(localStorage);
+  for (var i = 0; i < keys.length; i++) {
+  var storedIdea = JSON.parse(localStorage.getItem(keys[i]));
+  tasks.push(storedIdea);
+  if (tasks[i].completed === 'completed') {
+    $('.task-list').prepend(`<article class="task-card ${tasks[i].completed}" id="${tasks[i].id}">
+      <h2 class="task-title" contenteditable="true">${tasks[i].title}</h2>
+      <article class="delete" aria-label="Button to delete idea"></article>
+      <p class="task-body" contenteditable="true">${tasks[i].body}</p>
+      <section class="quality-completed">
+        <article class="upvote"></article>
+        <article class="downvote"></article>
+        <h3 class="quality">${tasks[i].quality}</h3>
+        <article class="completed-task">
+          <input type="checkbox" name="completed-task-checkbox" id="completed-checkbox" class="completed-checkbox" value="value" ${tasks[i].checked}>
+          <label for="completed-task-checkbox">Completed Task</label>
+        </article>
+        </article>
+      </section>
+      </article>`);
+    }
+  }
+  toggleCompletedBtn();
+}
+
+function toggleCompletedBtn() {
+  var showHideBtnText = $('.show-hide-btn').text();
+  if (showHideBtnText === 'Show Completed') {
+    $('.show-hide-btn').text('Hide Completed').removeClass('show-completed').addClass('hide-completed');
+  } else {
+     hideCompletedTasks();
+  }
+}
+
+function hideCompletedTasks() {
+  $('.completed').addClass('hide');
+  $('.show-hide-btn').text('Show Completed').removeClass('hide-completed').addClass('show-completed');
+}
+
+function deleteTasks() {
+  $(this).closest('.task-card').fadeOut();
+  var id = $(this).closest('.task-card').attr('id');
   localStorage.removeItem(id);
 }
 
-function upvoteIdea() {
+function upvoteTask() {
   if ($(this).siblings('h3').text() === 'quality: swill') {
     $(this).siblings('h3').text('quality: plausible');
   } else if ($(this).siblings('h3').text() === 'quality: plausible') {
@@ -68,7 +152,7 @@ function upvoteIdea() {
   saveQuality(this)
 }
 
-function downvoteIdea() {
+function downvoteTask() {
   if ($(this).siblings('h3').text() === 'quality: genius') {
     $(this).siblings('h3').text('quality: plausible')
   } else if ($(this).siblings('h3').text() === 'quality: plausible') {
@@ -77,8 +161,8 @@ function downvoteIdea() {
   saveQuality(this)
 }
 
-function saveQuality(voteBtn) {
-  var key = $(voteBtn).closest('.idea-card').attr('id');
+function saveQuality(newThis) {
+  var key = $(newThis).closest('.task-card').attr('id');
   var stringifiedIdea = localStorage.getItem(key);
   var parsedIdea = JSON.parse(stringifiedIdea);
   parsedIdea.quality = $(voteBtn).siblings('h3').text();
@@ -87,7 +171,7 @@ function saveQuality(voteBtn) {
 }
 
 function saveEditedTitle() {
-  var key = $(this).closest('.idea-card').attr('id');
+  var key = $(this).closest('.task-card').attr('id');
   var stringifiedIdea = localStorage.getItem(key);
   idea = JSON.parse(stringifiedIdea);
   idea.title = $(this).text();
@@ -96,7 +180,7 @@ function saveEditedTitle() {
 }
 
 function saveEditedBody() {
-  var key = $(this).closest('.idea-card').attr('id');
+  var key = $(this).closest('.task-card').attr('id');
   var stringifiedIdea = localStorage.getItem(key);
   idea = JSON.parse(stringifiedIdea);
   idea.body = $(this).text();
@@ -106,9 +190,29 @@ function saveEditedBody() {
 
 function search() {
   var $input = $('.search-field').val().toLowerCase();
-  $(".idea-card").filter(function() {
+  $(".task-card").filter(function() {
   $(this).toggle($(this).text().toLowerCase().indexOf($input) > -1)
   }); 
+}
+
+
+function updateCompleted() {
+  var key = $(this).closest('.task-card').attr('id');
+  var stringifiedIdea = localStorage.getItem(key);
+  idea = JSON.parse(stringifiedIdea);
+  if (idea.completed === '') {
+    idea.completed = 'completed';
+    idea.checked = 'checked'; 
+  } else {
+    idea.completed = '';
+    idea.checked = '';
+  }
+  var changedIdea = JSON.stringify(idea);
+  localStorage.setItem(key, changedIdea);
+}
+
+function addCompletedClass() {
+  $(this).closest('.task-card').toggleClass('completed');
 }
 
 function formReset(){
