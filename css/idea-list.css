@@ -1,7 +1,4 @@
-/*why are undescores used for search css?*/
-/*i personally dont like adding section and article to selectors*/
-
-.ideas {
+.task-section {
   display: flex;
   justify-content: center;
 }
@@ -11,7 +8,7 @@
   width: 100%;
 }
 
-.section-ideas {
+.task-list {
   display: flex;
   flex-direction: column;
   margin: 423px auto 0px;
@@ -24,4 +21,9 @@
   background-color: #FFF;
   position: fixed;
   z-index: 1;
+}
+
+.show-hide-btn {
+  margin: 418px 0 0 0;
+  z-index-index: 1;
 }
