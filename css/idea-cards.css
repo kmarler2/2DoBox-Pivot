@@ -35,12 +35,12 @@
   cursor: pointer;
 }
 
-.idea-body {
+.task-body {
   color: #939598;
   margin-bottom: 10px;
 }
 
-.idea-card {
+.task-card {
   border-bottom: 3px solid #D1D3D4;
   margin-bottom: 20px;
   max-width: 600px;
@@ -50,7 +50,7 @@
   width: 100%;
 }
 
-.idea-title {
+.task-title {
   color: #6D6E71;
   display: inline-block;
   font-weight: 700;

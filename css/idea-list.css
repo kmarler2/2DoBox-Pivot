@@ -11,7 +11,7 @@
   width: 100%;
 }
 
-.ideas-list {
+.task-list {
   display: flex;
   flex-direction: column;
   margin: 423px auto 0px;
