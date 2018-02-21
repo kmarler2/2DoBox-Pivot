@@ -76,10 +76,14 @@ function prependIncompleteTasks() {
     i++;
     if (storedTask.completed === '') {
       prependTask(storedTask);
-      tasks.push(storedTask);
+      tasks.push(storedTask); 
+    }
   }
+createButton();
 }
 
+  function createButton() {
+$('.task-list').append('<button class="show-more-button">Show More</button>');
 }
 
 function prependCompletedTasks() {
