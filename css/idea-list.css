@@ -1,0 +1,27 @@
+/*why are undescores used for search css?*/
+/*i personally dont like adding section and article to selectors*/
+
+.ideas {
+  display: flex;
+  justify-content: center;
+}
+
+.search-field {
+  margin: 344px auto 0px;
+  width: 100%;
+}
+
+.section-ideas {
+  display: flex;
+  flex-direction: column;
+  margin: 423px auto 0px;
+  position: absolute;
+  width: 60%;
+  z-index: -1;
+}
+
+.search {
+  background-color: #FFF;
+  position: fixed;
+  z-index: 1;
+}

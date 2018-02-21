@@ -1,0 +1,80 @@
+.delete {
+  background-image: url(../images/delete.svg);
+  background-repeat: no-repeat;
+  display: inline-block;
+  float: right;
+  height: 20px;
+  margin: 5px 5px 0px 0px;
+  width: 29px;
+}
+
+.delete:hover {
+  background-image: url(../images/delete-hover.svg);
+  cursor: pointer;
+}
+
+.downvote {
+  background-image: url(../images/downvote.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  height: 20px;
+  width: 20px;
+  z-index: 50;
+}
+
+.downvote, .upvote {
+  display: inline-block;
+  float: left;
+  height: 20px;
+  margin: 5px 15px 0px 0px;
+}
+
+.downvote:hover {
+  background-image: url(../images/downvote-hover.svg);
+  cursor: pointer;
+}
+
+.idea-body {
+  color: #939598;
+  margin-bottom: 10px;
+}
+
+.idea-card {
+  border-bottom: 3px solid #D1D3D4;
+  margin-bottom: 20px;
+  max-width: 600px;
+  overflow-y: scroll;
+  padding-bottom: 15px;
+  text-align: left;
+  width: 100%;
+}
+
+.idea-title {
+  color: #6D6E71;
+  display: inline-block;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.upvote {
+  background-image: url(../images/upvote.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  height: 20px;
+  width: 20px;
+  z-index: 50;
+}
+
+.upvote:hover {
+  background-image: url(../images/upvote-hover.svg);
+  cursor: pointer;
+}
+
+.importance {
+  color: #6D6E71;
+  font-size: 15px;
+  margin-top: 5px;
+  text-align: left;
+}
