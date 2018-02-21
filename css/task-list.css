@@ -13,6 +13,7 @@
   flex-direction: column;
   margin: 423px auto 0px;
   position: absolute;
+  padding-top: 60px;
   width: 60%;
   z-index: -1;
 }
@@ -24,6 +25,17 @@
 }
 
 .show-hide-btn {
-  margin: 418px 0 0 0;
-  z-index-index: 1;
+  margin: 430px 0 0 0;
+  background: #00A79D;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.show-hide-btn:focus {
+  outline: none;
+}
+
+.show-hide-btn:hover {
+  cursor: pointer;
 }

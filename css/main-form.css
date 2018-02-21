@@ -52,6 +52,7 @@ span {
 .save-btn:hover {
   background-color: #045E55;
   color: #FFF;
+  cursor: pointer;
 }
 
 .main-section {

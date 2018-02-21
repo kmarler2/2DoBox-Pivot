@@ -16,8 +16,8 @@ $('.task-list').on('click', '.upvote', upvoteTask);
 $('.task-list').on('click', '.downvote', downvoteTask);
 $('.task-list').on('input', '.task-title', saveEditedTitle);
 $('.task-list').on('input', '.task-body', saveEditedBody);
-$('.task-list').on('click', '.completed-checkbox', updateCompleted);
-$('.task-list').on('click', '.completed-checkbox', addCompletedClass);
+$('.task-list').on('click', '.completed-button', updateCompleted);
+$('.task-list').on('click', '.completed-button', addCompletedClass);
 $('.search-field').on('keyup', search);
 
 function Task(id, title, body, importance, completed) {
@@ -58,8 +58,7 @@ function prependTask(storedTask) {
         <article class="downvote"></article>
         <h3 class="importance">${storedTask.importance}</h3>
         <article class="completed-task">
-          <input type="checkbox" name="completed-task-checkbox" id="completed-checkbox" class="completed-checkbox" value="value" ${storedTask.checked}>
-          <label for="completed-task-checkbox">Completed Task</label>
+          <button for="completed-task-button" class="completed-button">Completed Task</button>
         </article>
         </article>
       </section>
@@ -71,11 +70,13 @@ function prependIncompleteTasks() {
   $('.task-list').html('');
   var tasks = [];
   var keys = Object.keys(localStorage);
-  for (var i = 0; i < keys.length; i++) {
-  var storedTask = JSON.parse(localStorage.getItem(keys[i]));
-  tasks.push(storedTask);
-  if (tasks[i].completed === '') {
-    prependTask(storedTask);
+  var i = 0;
+  while (tasks.length < 10) {
+    var storedTask = JSON.parse(localStorage.getItem(keys[i]));
+    i++;
+    if (storedTask.completed === '') {
+      prependTask(storedTask);
+      tasks.push(storedTask);
   }
 }
 
@@ -112,6 +113,7 @@ function deleteTasks() {
   $(this).closest('.task-card').fadeOut();
   var id = $(this).closest('.task-card').attr('id');
   localStorage.removeItem(id);
+  prependIncompleteTasks();
 }
 
 function upvoteTask() {
