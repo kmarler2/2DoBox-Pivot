@@ -41,11 +41,11 @@
 }
 
 .task-card {
-  border-bottom: 3px solid #D1D3D4;
+  border-bottom: 1px solid #D1D3D4;
   margin-bottom: 20px;
   max-width: 600px;
   overflow-y: scroll;
-  padding-bottom: 15px;
+  padding-bottom: 25px;
   text-align: left;
   width: 100%;
 }
@@ -94,19 +94,28 @@
   margin: 0;
 }
 
-.completed-task input {
-    float: left;
-    width: 32px;
-    height: 23px;
-}
-
-.completed-task label {
+.completed-task button {
     float: left;
     color: #6D6E71;
     font-weight: bold;
+    background: #eee;
     font-size: 14px;
     text-align: left;
-    margin-top: 2px;
+    padding: 5px 10px;
+    width: auto;
+}
+
+.completed .completed-task button {
+    color: #fff;
+    background: #888;
+}
+
+.completed-task button:focus {
+  outline: none;
+}
+
+.completed-task button:hover {
+  cursor: pointer;
 }
 
 .hide {
