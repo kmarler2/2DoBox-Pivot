@@ -74,10 +74,10 @@
 
 .importance {
   color: #6D6E71;
+  display: inline-block;
   font-size: 15px;
   margin-top: 3px;
   text-align: left;
-  display: inline-block;
 }
 
 .completed {
@@ -95,19 +95,19 @@
 }
 
 .completed-task button {
-    float: left;
-    color: #6D6E71;
-    font-weight: bold;
-    background: #eee;
-    font-size: 14px;
-    text-align: left;
-    padding: 5px 10px;
-    width: auto;
+  background: #eee;
+  color: #6D6E71;
+  float: left;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px 10px;
+  text-align: left;
+  width: auto;
 }
 
 .completed .completed-task button {
-    color: #fff;
-    background: #888;
+  color: #fff;
+  background: #888;
 }
 
 .completed-task button:focus {

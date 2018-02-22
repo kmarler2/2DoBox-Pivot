@@ -12,8 +12,8 @@
   display: flex;
   flex-direction: column;
   margin: 423px auto 0px;
-  position: absolute;
   padding-top: 60px;
+  position: absolute;
   width: 60%;
   z-index: -1;
 }
@@ -25,10 +25,10 @@
 }
 
 .show-hide-btn {
-  margin: 430px 0 0 0;
   background: #00A79D;
   color: #fff;
   font-size: 14px;
+  margin: 430px 0 0 0;
   padding: 10px;
 }
 
