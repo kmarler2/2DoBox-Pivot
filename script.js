@@ -2,69 +2,44 @@ var $inputTitle = $('.title');
 var $inputBody = $('.input-text');
 var $saveBtn = $('.save-btn')
 var $importance = 'Importance: Normal';
-var $showCompletedBtn = $('.show-completed');
-var $hideCompletedBtn = $('.hide-completed');
 
 $(window).on('load', prependIncompleteTasks);
 $saveBtn.on('click', saveTask);
 $inputBody.on('keyup', toggleDisableState);
 $inputTitle.on('keyup', toggleDisableState);
-$showCompletedBtn.on('click', prependCompletedTasks);
-$hideCompletedBtn.on('click', hideCompletedTasks);
+$('.show-completed').on('click', prependCompletedTasks);
+$('.hide-completed').on('click', hideCompletedTasks);
 $('.task-list').on('click', '.delete', deleteTasks);
 $('.task-list').on('click', '.upvote', upvoteTask);
 $('.task-list').on('click', '.downvote', downvoteTask);
 $('.task-list').on('input', '.task-title', saveEditedTitle);
 $('.task-list').on('input', '.task-body', saveEditedBody);
-$('.task-list').on('click', '.completed-button', updateCompleted);
-$('.task-list').on('click', '.completed-button', addCompletedClass);
+$('.task-list').on('click', '.completed-btn', updateCompleted);
+$('.task-list').on('click', '.completed-btn', addCompletedClass);
+$('.task-list').on('click', '.show-more-btn', showMore);
 $('.search-field').on('keyup', search);
 
-function Task(id, title, body, importance, completed) {
+function Task(id, title, body, importance) {
   this.id = id;
   this.title = title;
   this.body = body;
   this.importance = importance;
   this.completed = '';
-  this.checked = '';
 }
 
 function saveTask(event) {
   event.preventDefault();
-  var newTask = new Task((jQuery.now()), $inputTitle.val(), $inputBody.val(), $importance)
-  sendToStorage(newTask)
+  var newTask = new Task((jQuery.now()), $inputTitle.val(), $inputBody.val(), $importance);
   formReset();
   clearInputs();
+  sendToStorage(newTask)
 }
 
 function sendToStorage(task) {
   var stringifiedTask = JSON.stringify(task);
   localStorage.setItem(task.id, stringifiedTask);
-  getFromStorage(task);
+  prependIncompleteTasks();
 }
-
-function getFromStorage(task) {
-  var storedTask = JSON.parse(localStorage.getItem(task.id));
-  prependTask(storedTask);
-}
-
-function prependTask(storedTask) {
-    $('.task-list').prepend(`<article class="task-card ${storedTask.completed}" id="${storedTask.id}">
-      <h2 class="task-title" contenteditable="true">${storedTask.title}</h2>
-      <article class="delete" aria-label="Button to delete task"></article>
-      <p class="task-body" contenteditable="true">${storedTask.body}</p>
-      <section class="importance-completed">
-        <article class="upvote"></article>
-        <article class="downvote"></article>
-        <h3 class="importance">${storedTask.importance}</h3>
-        <article class="completed-task">
-          <button for="completed-task-button" class="completed-button">Completed Task</button>
-        </article>
-        </article>
-      </section>
-      </article>`);
-  }
-
 
 function prependIncompleteTasks() {
   $('.task-list').html('');
@@ -79,11 +54,22 @@ function prependIncompleteTasks() {
       tasks.push(storedTask); 
     }
   }
-createButton();
+  createButton();
 }
 
-  function createButton() {
-$('.task-list').append('<button class="show-more-button">Show More</button>');
+function createButton() {
+  $('.task-list').append('<button class="show-more-btn">Show More</button>');
+}
+
+function showMore() {
+  $('.task-list').html('');
+  var keys = Object.keys(localStorage);
+  for (var i = 0; i < localStorage.length; i++) {
+    var storedTask = JSON.parse(localStorage.getItem(keys[i]));
+    if (storedTask.completed === '') {
+      prependTask(storedTask);
+    }
+  }
 }
 
 function prependCompletedTasks() {
@@ -98,6 +84,23 @@ function prependCompletedTasks() {
   }
   toggleCompletedBtn();
 }
+
+function prependTask(storedTask) {
+  $('.task-list').prepend(`<article class="task-card ${storedTask.completed}" id="${storedTask.id}">
+    <h2 class="task-title" contenteditable="true">${storedTask.title}</h2>
+    <article class="delete" aria-label="Button to delete task"></article>
+    <p class="task-body" contenteditable="true">${storedTask.body}</p>
+    <section class="importance-completed">
+      <article class="upvote"></article>
+      <article class="downvote"></article>
+      <h3 class="importance">${storedTask.importance}</h3>
+      <article class="completed-task">
+        <button for="completed-task-button" class="completed-btn">Completed</button>
+      </article>
+      </article>
+    </section>
+    </article>`);
+  }
 
 function toggleCompletedBtn() {
   var showHideBtnText = $('.show-hide-btn').text();
@@ -143,15 +146,15 @@ function downvoteTask() {
   } else {
     $(this).siblings('h3').text('Importance: None');
   }
-  saveImportance(this)
+  saveImportance(this);
 }
 
 function saveImportance(newThis) {
   var key = $(newThis).closest('.task-card').attr('id');
   var stringifiedTask = localStorage.getItem(key);
-  var parsedTask = JSON.parse(stringifiedTask);
-  parsedTask.importance = $(newThis).siblings('h3').text();
-  var stringifiedTask = JSON.stringify(parsedTask)
+  task = JSON.parse(stringifiedTask);
+  task.importance = $(newThis).siblings('h3').text();
+  var stringifiedTask = JSON.stringify(task)
   localStorage.setItem(key, stringifiedTask);
 }
 
@@ -180,7 +183,6 @@ function search() {
   }); 
 }
 
-
 function updateCompleted() {
   var key = $(this).closest('.task-card').attr('id');
   var stringifiedTask = localStorage.getItem(key);
@@ -200,7 +202,7 @@ function addCompletedClass() {
   $(this).closest('.task-card').toggleClass('completed');
 }
 
-function formReset(){
+function formReset() {
   clearInputs();
   toggleDisableState();
 }
