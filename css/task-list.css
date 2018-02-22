@@ -32,6 +32,15 @@
   padding: 10px;
 }
 
+.show-more-btn {
+  background: #00A79D;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px;
+  width: 200px;
+  margin: 0 auto;
+}
+
 .show-hide-btn:focus {
   outline: none;
 }
